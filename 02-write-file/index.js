@@ -3,7 +3,7 @@ const path = require('path');
 const { stdin, stdout } = process;
 const readline = require('readline');
 
-const writeStream = fs.createWriteStream(path.join(__dirname, '/', 'text.txt'));
+const writeStream = fs.createWriteStream(path.join(__dirname, 'text.txt'));
 
 const myReadLine = readline.createInterface({
   input: stdin,

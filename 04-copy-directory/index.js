@@ -68,4 +68,4 @@ async function copyDir(pathFolderFrom, pathFolderInto) {
   copyFiles(pathFolderFromStr, pathFolderIntoStr);
 }
 
-copyDir(path.join(__dirname, '/', 'files'), path.join(__dirname, '/', 'files-copy'));
+copyDir(path.join(__dirname, 'files'), path.join(__dirname, 'files-copy'));

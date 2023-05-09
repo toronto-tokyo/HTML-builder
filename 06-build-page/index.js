@@ -19,15 +19,15 @@ async function getContent(filePath) {
 }
 
 async function bundleCssFiles() {
-  const files = await fs.promises.readdir(path.join(__dirname, '/styles'), { withFileTypes: true }, (err) => {
+  const files = await fs.promises.readdir(path.join(__dirname, 'styles'), { withFileTypes: true }, (err) => {
     console.log(err);
   });
-  const writeStream = fs.createWriteStream(path.join(__dirname, '/project-dist', '/style.css'));
+  const writeStream = fs.createWriteStream(path.join(__dirname, 'project-dist', 'style.css'));
   if (files.length > 0) {
     files.forEach(file => {
       const isCssFile = file.name.split('.').at(-1) === 'css';
       if (isCssFile) {
-        const readStream = fs.createReadStream(path.join(__dirname, '/styles', file.name));
+        const readStream = fs.createReadStream(path.join(__dirname, 'styles', file.name));
         readStream.pipe(writeStream);
       }
     });
@@ -120,20 +120,20 @@ async function copyDir(pathFolderFrom, pathFolderInto) {
 }
 
 async function buildPage() {
-  await fs.promises.mkdir(path.join(__dirname, '/project-dist'), { recursive: true });
-  let templatePage = await getContent(path.join(__dirname, '/template.html'));
+  await fs.promises.mkdir(path.join(__dirname, 'project-dist'), { recursive: true });
+  let templatePage = await getContent(path.join(__dirname, 'template.html'));
   const templateTags = templatePage.match(/\{\{.+?\}\}/g);
   for (let i = 0; i < templateTags.length; i += 1) {
     const templateTag = templateTags[i];
     const tag = templateTag.replace(/\W/g, '');
     const templateTagRegExp = new RegExp(`${templateTag}`, 'g');
-    const content = await getContent(path.join(__dirname, '/components', `/${tag}.html`));
+    const content = await getContent(path.join(__dirname, 'components', `${tag}.html`));
     templatePage = templatePage.replace(templateTagRegExp, content);
   }
-  const writeStream = fs.createWriteStream(path.join(__dirname, '/project-dist', '/index.html'));
+  const writeStream = fs.createWriteStream(path.join(__dirname, 'project-dist', 'index.html'));
   writeStream.write(templatePage);
   await bundleCssFiles();
-  await copyDir(path.join(__dirname, '/assets'), path.join(__dirname, 'project-dist', 'assets'));
+  await copyDir(path.join(__dirname, 'assets'), path.join(__dirname, 'project-dist', 'assets'));
 }
 
 
