@@ -7,16 +7,16 @@ fs.readdir(path.join(__dirname, '/', 'secret-folder'), { withFileTypes: true }, 
   }
   data.forEach(el => {
     if (el.isFile()) {
-      const elPath = path.join(__dirname, '/secret-folder', el.name)
+      const elPath = path.join(__dirname, '/secret-folder', el.name);
       const extname = path.extname(elPath);
       const name = el.name.split(extname).join('');
       fs.stat(elPath, (err, stats) => {
         if (err) {
           return console.log(err);
         }
-        console.log(`${name}-${extname.slice(1)}-${stats.size}b`)
-      })
+        console.log(`${name}-${extname.slice(1)}-${stats.size}b`);
+      });
     }
-  })
+  });
 });
 
