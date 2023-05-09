@@ -19,6 +19,12 @@ myReadLine.on('line', (line) => {
   writeStream.write(`${line}\n`);
 });
 
+myReadLine.on('SIGINT', () => {
+  writeStream.write(`${myReadLine.line}`);
+  stdout.write('\n');
+  return myReadLine.close();
+});
+
 myReadLine.on('close', () => {
   stdout.write('Thank you, goodbye!');
 });
